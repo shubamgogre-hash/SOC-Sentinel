@@ -1,0 +1,40 @@
+# Secrets & credentials
+.env
+*.env
+*.key
+*.pem
+credentials*
+secrets*
+password*
+
+# Splunk internal/runtime files
+splunk/etc/
+splunk/var/
+splunk/log/
+*.splunk
+*.bundle
+
+# Raw/local security logs
+*.log
+auth.log
+syslog
+secure
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+
