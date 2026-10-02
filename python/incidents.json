@@ -1,0 +1,86 @@
+[
+    {
+        "incident_id": "SOC-20261002122640",
+        "alert_name": "Sudo Authentication Failure Followed by Success",
+        "severity": "Medium",
+        "status": "INVESTIGATE",
+        "correlation_window_seconds": 300,
+        "failure_time": "2026-10-02T12:26:40.856223+00:00",
+        "success_time": "2026-10-02T12:27:16.020895+00:00",
+        "time_gap_seconds": 35.164672,
+        "mitre_technique": "Candidate - T1078 Valid Accounts",
+        "analyst_note": "Authentication failure was followed by successful sudo activity within the correlation window. This is an investigation candidate, not proof of compromise."
+    },
+    {
+        "incident_id": "SOC-20261002133153",
+        "alert_name": "Sudo Authentication Failure Followed by Success",
+        "severity": "Medium",
+        "status": "INVESTIGATE",
+        "correlation_window_seconds": 300,
+        "failure_time": "2026-10-02T13:31:53.673117+00:00",
+        "success_time": "2026-10-02T13:32:29.201239+00:00",
+        "time_gap_seconds": 35.528122,
+        "mitre_technique": "Candidate - T1078 Valid Accounts",
+        "analyst_note": "Authentication failure was followed by successful sudo activity within the correlation window. This is an investigation candidate, not proof of compromise."
+    },
+    {
+        "incident_id": "SOC-20261002133229",
+        "alert_name": "Sudo Authentication Failure Followed by Success",
+        "severity": "Medium",
+        "status": "INVESTIGATE",
+        "correlation_window_seconds": 300,
+        "failure_time": "2026-10-02T13:32:29.201474+00:00",
+        "success_time": "2026-10-02T13:33:28.403379+00:00",
+        "time_gap_seconds": 59.201905,
+        "mitre_technique": "Candidate - T1078 Valid Accounts",
+        "analyst_note": "Authentication failure was followed by successful sudo activity within the correlation window. This is an investigation candidate, not proof of compromise."
+    },
+    {
+        "incident_id": "SOC-20261002133328",
+        "alert_name": "Sudo Authentication Failure Followed by Success",
+        "severity": "Medium",
+        "status": "INVESTIGATE",
+        "correlation_window_seconds": 300,
+        "failure_time": "2026-10-02T13:33:28.403620+00:00",
+        "success_time": "2026-10-02T13:34:11.669321+00:00",
+        "time_gap_seconds": 43.265701,
+        "mitre_technique": "Candidate - T1078 Valid Accounts",
+        "analyst_note": "Authentication failure was followed by successful sudo activity within the correlation window. This is an investigation candidate, not proof of compromise."
+    },
+    {
+        "incident_id": "SOC-20261002133411",
+        "alert_name": "Sudo Authentication Failure Followed by Success",
+        "severity": "Medium",
+        "status": "INVESTIGATE",
+        "correlation_window_seconds": 300,
+        "failure_time": "2026-10-02T13:34:11.669807+00:00",
+        "success_time": "2026-10-02T13:34:35.768359+00:00",
+        "time_gap_seconds": 24.098552,
+        "mitre_technique": "Candidate - T1078 Valid Accounts",
+        "analyst_note": "Authentication failure was followed by successful sudo activity within the correlation window. This is an investigation candidate, not proof of compromise."
+    },
+    {
+        "incident_id": "SOC-20261002133435",
+        "alert_name": "Sudo Authentication Failure Followed by Success",
+        "severity": "Medium",
+        "status": "INVESTIGATE",
+        "correlation_window_seconds": 300,
+        "failure_time": "2026-10-02T13:34:35.768613+00:00",
+        "success_time": "2026-10-02T13:37:40.753148+00:00",
+        "time_gap_seconds": 184.984535,
+        "mitre_technique": "Candidate - T1078 Valid Accounts",
+        "analyst_note": "Authentication failure was followed by successful sudo activity within the correlation window. This is an investigation candidate, not proof of compromise."
+    },
+    {
+        "incident_id": "SOC-20261002135743",
+        "alert_name": "Sudo Authentication Failure Followed by Success",
+        "severity": "Medium",
+        "status": "INVESTIGATE",
+        "correlation_window_seconds": 300,
+        "failure_time": "2026-10-02T13:57:43.900454+00:00",
+        "success_time": "2026-10-02T13:58:02.972244+00:00",
+        "time_gap_seconds": 19.07179,
+        "mitre_technique": "Candidate - T1078 Valid Accounts",
+        "analyst_note": "Authentication failure was followed by successful sudo activity within the correlation window. This is an investigation candidate, not proof of compromise."
+    }
+]
