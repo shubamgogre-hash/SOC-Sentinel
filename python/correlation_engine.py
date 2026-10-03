@@ -256,6 +256,118 @@ with open(OUTPUT_FILE, "w") as output_file:
 # STEP 6: DISPLAY RESULTS
 # ==========================================
 
+AUTH_ATTACK_LOG_FILE = (
+    "/home/shubam/SOC-Sentinel/python/"
+    "simulated_auth_attack.log"
+)
+
+auth_events = []
+
+with open(AUTH_ATTACK_LOG_FILE, "r") as log_file:
+
+    for line in log_file:
+
+        if "authentication failure" in line:
+            event_type = "AUTH_FAILURE"
+
+        elif "successful authentication" in line:
+            event_type = "AUTH_SUCCESS"
+
+        else:
+            continue
+
+        timestamp_match = re.match(
+            r"(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d+[+-]\d{2}:\d{2})",
+            line
+        )
+
+        if timestamp_match:
+
+            timestamp = datetime.fromisoformat(
+                timestamp_match.group(1)
+            )
+
+            auth_events.append({
+                "timestamp": timestamp,
+                "event_type": event_type,
+                "raw": line.strip()
+            })
+
+
+# ------------------------------------------
+# CORRELATE MULTIPLE FAILURES → SUCCESS
+# ------------------------------------------
+
+auth_events.sort(
+    key=lambda event: event["timestamp"]
+)
+
+for i, event in enumerate(auth_events):
+
+    if event["event_type"] != "AUTH_FAILURE":
+        continue
+
+    window_start = event["timestamp"]
+    failure_events = [event]
+
+    for next_event in auth_events[i + 1:]:
+
+        time_gap = (
+            next_event["timestamp"]
+            - window_start
+        ).total_seconds()
+
+        if time_gap > 300:
+            break
+
+        if next_event["event_type"] == "AUTH_FAILURE":
+            failure_events.append(next_event)
+
+        elif (
+            next_event["event_type"] == "AUTH_SUCCESS"
+            and len(failure_events) >= 3
+        ):
+
+            incident_id = (
+                "SIM-AUTH-"
+                + window_start.strftime("%Y%m%d%H%M%S")
+            )
+
+            incident = {
+                "incident_id": incident_id,
+                "alert_name":
+                    "Multiple Authentication Failures "
+                    "Followed by Successful Login",
+                "severity": "High",
+                "status": "INVESTIGATE",
+                "scenario_type":
+                    "SIMULATED_LAB_EVENT",
+                "failed_attempts":
+                    len(failure_events),
+                "success_time":
+                    next_event["timestamp"].isoformat(),
+                "correlation_window_seconds": 300,
+                "attack_pattern":
+                    "FAILED_LOGIN -> FAILED_LOGIN -> "
+                    "FAILED_LOGIN -> SUCCESSFUL_LOGIN",
+                "source_ip":
+                    "10.10.10.50",
+                "target_user":
+                    "shubam",
+                "mitre_technique":
+                    "Candidate - T1110 Brute Force",
+                "analyst_note":
+                    "This is a simulated laboratory "
+                    "authentication attack scenario. Multiple "
+                    "authentication failures were followed by "
+                    "a successful authentication within the "
+                    "correlation window. This is an investigation "
+                    "candidate, not proof of compromise."
+            }
+
+            incidents.append(incident)
+
+            break
 print("SOC Sentinel - Correlation Engine")
 print("=================================")
 
