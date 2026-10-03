@@ -3,14 +3,16 @@ import json
 from datetime import datetime
 
 LOG_FILE = "/var/log/auth.log"
+SIMULATED_LOG_FILE = "/home/shubam/SOC-Sentinel/python/simulated_attack.log"
 OUTPUT_FILE = "/home/shubam/SOC-Sentinel/python/incidents.json"
 
 events = []
+simulated_events = []
 incidents = []
 
 
 # ==========================================
-# STEP 1: READ AND CLASSIFY LOG EVENTS
+# STEP 1: READ AND CLASSIFY REAL LOG EVENTS
 # ==========================================
 
 with open(LOG_FILE, "r") as log_file:
@@ -41,10 +43,6 @@ with open(LOG_FILE, "r") as log_file:
         else:
             continue
 
-        # ==========================================
-        # STEP 2: EXTRACT TIMESTAMP
-        # ==========================================
-
         timestamp_match = re.match(
             r"(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d+[+-]\d{2}:\d{2})",
             line
@@ -64,7 +62,45 @@ with open(LOG_FILE, "r") as log_file:
 
 
 # ==========================================
-# STEP 3: CORRELATION ENGINE
+# STEP 2: READ SIMULATED LAB EVENTS
+# ==========================================
+
+with open(SIMULATED_LOG_FILE, "r") as log_file:
+
+    for line in log_file:
+
+        if "session opened for user root" in line:
+            event_type = "ROOT_LOGIN"
+
+        elif "password changed" in line:
+            event_type = "PASSWORD_CHANGE"
+
+        elif "command execution detected" in line:
+            event_type = "COMMAND_EXECUTION"
+
+        else:
+            continue
+
+        timestamp_match = re.match(
+            r"(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d+[+-]\d{2}:\d{2})",
+            line
+        )
+
+        if timestamp_match:
+
+            timestamp = datetime.fromisoformat(
+                timestamp_match.group(1)
+            )
+
+            simulated_events.append({
+                "timestamp": timestamp,
+                "event_type": event_type,
+                "raw": line.strip()
+            })
+
+
+# ==========================================
+# STEP 3: REAL SUDO CORRELATION
 # ==========================================
 
 for i, event in enumerate(events):
@@ -118,7 +154,93 @@ for i, event in enumerate(events):
 
 
 # ==========================================
-# STEP 4: SAVE INCIDENTS AS JSON
+# STEP 4: SIMULATED ATTACK STORY CORRELATION
+# ==========================================
+
+simulated_events.sort(
+    key=lambda event: event["timestamp"]
+)
+
+for i, event in enumerate(simulated_events):
+
+    if event["event_type"] != "ROOT_LOGIN":
+        continue
+
+    root_login = event
+    password_change = None
+    command_execution = None
+
+    for next_event in simulated_events[i + 1:]:
+
+        time_gap = (
+            next_event["timestamp"]
+            - root_login["timestamp"]
+        ).total_seconds()
+
+        if time_gap > 300:
+            break
+
+        if (
+            next_event["event_type"] == "PASSWORD_CHANGE"
+            and password_change is None
+        ):
+            password_change = next_event
+
+        elif (
+            next_event["event_type"] == "COMMAND_EXECUTION"
+            and password_change is not None
+        ):
+            command_execution = next_event
+            break
+
+    if password_change and command_execution:
+
+        incident_id = (
+            "SIM-"
+            + root_login["timestamp"].strftime("%Y%m%d%H%M%S")
+        )
+
+        incident = {
+            "incident_id": incident_id,
+            "alert_name":
+                "Privileged Account Activity Attack Story",
+            "severity": "High",
+            "status": "INVESTIGATE",
+            "scenario_type": "SIMULATED_LAB_EVENT",
+            "attack_story": [
+                "ROOT_LOGIN",
+                "PASSWORD_CHANGE",
+                "COMMAND_EXECUTION"
+            ],
+            "root_login_time":
+                root_login["timestamp"].isoformat(),
+            "password_change_time":
+                password_change["timestamp"].isoformat(),
+            "command_execution_time":
+                command_execution["timestamp"].isoformat(),
+            "attack_story_duration_seconds":
+                (
+                    command_execution["timestamp"]
+                    - root_login["timestamp"]
+                ).total_seconds(),
+            "command":
+                "whoami",
+            "mitre_technique":
+                "Candidate - T1078 Valid Accounts",
+            "analyst_note":
+                "This is a simulated laboratory attack scenario "
+                "created for SOC Sentinel testing. The sequence "
+                "demonstrates correlation of privileged account "
+                "activity followed by password modification and "
+                "command execution. It is not evidence of a real "
+                "compromise."
+        }
+
+        incidents.append(incident)
+
+
+# ==========================================
+# STEP 5: SAVE INCIDENTS AS JSON
 # ==========================================
 
 with open(OUTPUT_FILE, "w") as output_file:
@@ -131,7 +253,7 @@ with open(OUTPUT_FILE, "w") as output_file:
 
 
 # ==========================================
-# STEP 5: DISPLAY RESULTS
+# STEP 6: DISPLAY RESULTS
 # ==========================================
 
 print("SOC Sentinel - Correlation Engine")
@@ -166,11 +288,33 @@ for incident in incidents:
         incident["status"]
     )
 
-    print(
-        "Time Gap:",
-        incident["time_gap_seconds"],
-        "seconds"
-    )
+    if "attack_story" in incident:
+
+        print(
+            "Attack Story:",
+            " -> ".join(incident["attack_story"])
+        )
+
+        print(
+            "Scenario:",
+            incident["scenario_type"]
+        )
+
+    if "time_gap_seconds" in incident:
+
+        print(
+            "Time Gap:",
+            incident["time_gap_seconds"],
+            "seconds"
+        )
+
+    if "attack_story_duration_seconds" in incident:
+
+        print(
+            "Attack Story Duration:",
+            incident["attack_story_duration_seconds"],
+            "seconds"
+        )
 
     print(
         "MITRE:",

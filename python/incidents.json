@@ -82,5 +82,24 @@
         "time_gap_seconds": 19.07179,
         "mitre_technique": "Candidate - T1078 Valid Accounts",
         "analyst_note": "Authentication failure was followed by successful sudo activity within the correlation window. This is an investigation candidate, not proof of compromise."
+    },
+    {
+        "incident_id": "SIM-20261003130000",
+        "alert_name": "Privileged Account Activity Attack Story",
+        "severity": "High",
+        "status": "INVESTIGATE",
+        "scenario_type": "SIMULATED_LAB_EVENT",
+        "attack_story": [
+            "ROOT_LOGIN",
+            "PASSWORD_CHANGE",
+            "COMMAND_EXECUTION"
+        ],
+        "root_login_time": "2026-10-03T13:00:00+00:00",
+        "password_change_time": "2026-10-03T13:01:00+00:00",
+        "command_execution_time": "2026-10-03T13:02:00+00:00",
+        "attack_story_duration_seconds": 120.0,
+        "command": "whoami",
+        "mitre_technique": "Candidate - T1078 Valid Accounts",
+        "analyst_note": "This is a simulated laboratory attack scenario created for SOC Sentinel testing. The sequence demonstrates correlation of privileged account activity followed by password modification and command execution. It is not evidence of a real compromise."
     }
 ]
