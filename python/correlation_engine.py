@@ -137,6 +137,8 @@ for i, event in enumerate(events):
                             failure_time.isoformat(),
                         "success_time":
                             success_time.isoformat(),
+                        "timestamp":
+                            success_time.isoformat(),
                         "time_gap_seconds": time_gap,
                         "mitre_technique":
                             "Candidate - T1078 Valid Accounts",
@@ -214,6 +216,8 @@ for i, event in enumerate(simulated_events):
             ],
             "root_login_time":
                 root_login["timestamp"].isoformat(),
+            "timestamp":
+                root_login["timestamp"].isoformat(),
             "password_change_time":
                 password_change["timestamp"].isoformat(),
             "command_execution_time":
@@ -238,18 +242,6 @@ for i, event in enumerate(simulated_events):
 
         incidents.append(incident)
 
-
-# ==========================================
-# STEP 5: SAVE INCIDENTS AS JSON
-# ==========================================
-
-with open(OUTPUT_FILE, "w") as output_file:
-
-    json.dump(
-        incidents,
-        output_file,
-        indent=4
-    )
 
 
 # ==========================================
@@ -346,6 +338,8 @@ for i, event in enumerate(auth_events):
                     len(failure_events),
                 "success_time":
                     next_event["timestamp"].isoformat(),
+                "timestamp":
+                    next_event["timestamp"].isoformat(),
                 "correlation_window_seconds": 300,
                 "attack_pattern":
                     "FAILED_LOGIN -> FAILED_LOGIN -> "
@@ -368,6 +362,19 @@ for i, event in enumerate(auth_events):
             incidents.append(incident)
 
             break
+
+# ==========================================
+# STEP 5: SAVE INCIDENTS AS JSON
+# ==========================================
+
+with open(OUTPUT_FILE, "w") as output_file:
+
+    json.dump(
+        incidents,
+        output_file,
+        indent=4
+    )
+
 print("SOC Sentinel - Correlation Engine")
 print("=================================")
 

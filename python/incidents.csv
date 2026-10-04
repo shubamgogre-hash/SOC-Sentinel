@@ -1,0 +1,10 @@
+incident_id,alert_name,severity,status,scenario_type,attack_story,mitre_technique,source_ip,target_user,failed_attempts,duration_seconds,timestamp
+SOC-20261002122640,Sudo Authentication Failure Followed by Success,Medium,INVESTIGATE,,,Candidate - T1078 Valid Accounts,,,,,2026-10-02T12:27:16.020895+00:00
+SOC-20261002133153,Sudo Authentication Failure Followed by Success,Medium,INVESTIGATE,,,Candidate - T1078 Valid Accounts,,,,,2026-10-02T13:32:29.201239+00:00
+SOC-20261002133229,Sudo Authentication Failure Followed by Success,Medium,INVESTIGATE,,,Candidate - T1078 Valid Accounts,,,,,2026-10-02T13:33:28.403379+00:00
+SOC-20261002133328,Sudo Authentication Failure Followed by Success,Medium,INVESTIGATE,,,Candidate - T1078 Valid Accounts,,,,,2026-10-02T13:34:11.669321+00:00
+SOC-20261002133411,Sudo Authentication Failure Followed by Success,Medium,INVESTIGATE,,,Candidate - T1078 Valid Accounts,,,,,2026-10-02T13:34:35.768359+00:00
+SOC-20261002133435,Sudo Authentication Failure Followed by Success,Medium,INVESTIGATE,,,Candidate - T1078 Valid Accounts,,,,,2026-10-02T13:37:40.753148+00:00
+SOC-20261002135743,Sudo Authentication Failure Followed by Success,Medium,INVESTIGATE,,,Candidate - T1078 Valid Accounts,,,,,2026-10-02T13:58:02.972244+00:00
+SIM-20261003130000,Privileged Account Activity Attack Story,High,INVESTIGATE,SIMULATED_LAB_EVENT,ROOT_LOGIN -> PASSWORD_CHANGE -> COMMAND_EXECUTION,Candidate - T1078 Valid Accounts,,,,,2026-10-03T13:00:00+00:00
+SIM-AUTH-20261003140000,Multiple Authentication Failures Followed by Successful Login,High,INVESTIGATE,SIMULATED_LAB_EVENT,,Candidate - T1110 Brute Force,10.10.10.50,shubam,3,,2026-10-03T14:01:30+00:00

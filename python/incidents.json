@@ -7,6 +7,7 @@
         "correlation_window_seconds": 300,
         "failure_time": "2026-10-02T12:26:40.856223+00:00",
         "success_time": "2026-10-02T12:27:16.020895+00:00",
+        "timestamp": "2026-10-02T12:27:16.020895+00:00",
         "time_gap_seconds": 35.164672,
         "mitre_technique": "Candidate - T1078 Valid Accounts",
         "analyst_note": "Authentication failure was followed by successful sudo activity within the correlation window. This is an investigation candidate, not proof of compromise."
@@ -19,6 +20,7 @@
         "correlation_window_seconds": 300,
         "failure_time": "2026-10-02T13:31:53.673117+00:00",
         "success_time": "2026-10-02T13:32:29.201239+00:00",
+        "timestamp": "2026-10-02T13:32:29.201239+00:00",
         "time_gap_seconds": 35.528122,
         "mitre_technique": "Candidate - T1078 Valid Accounts",
         "analyst_note": "Authentication failure was followed by successful sudo activity within the correlation window. This is an investigation candidate, not proof of compromise."
@@ -31,6 +33,7 @@
         "correlation_window_seconds": 300,
         "failure_time": "2026-10-02T13:32:29.201474+00:00",
         "success_time": "2026-10-02T13:33:28.403379+00:00",
+        "timestamp": "2026-10-02T13:33:28.403379+00:00",
         "time_gap_seconds": 59.201905,
         "mitre_technique": "Candidate - T1078 Valid Accounts",
         "analyst_note": "Authentication failure was followed by successful sudo activity within the correlation window. This is an investigation candidate, not proof of compromise."
@@ -43,6 +46,7 @@
         "correlation_window_seconds": 300,
         "failure_time": "2026-10-02T13:33:28.403620+00:00",
         "success_time": "2026-10-02T13:34:11.669321+00:00",
+        "timestamp": "2026-10-02T13:34:11.669321+00:00",
         "time_gap_seconds": 43.265701,
         "mitre_technique": "Candidate - T1078 Valid Accounts",
         "analyst_note": "Authentication failure was followed by successful sudo activity within the correlation window. This is an investigation candidate, not proof of compromise."
@@ -55,6 +59,7 @@
         "correlation_window_seconds": 300,
         "failure_time": "2026-10-02T13:34:11.669807+00:00",
         "success_time": "2026-10-02T13:34:35.768359+00:00",
+        "timestamp": "2026-10-02T13:34:35.768359+00:00",
         "time_gap_seconds": 24.098552,
         "mitre_technique": "Candidate - T1078 Valid Accounts",
         "analyst_note": "Authentication failure was followed by successful sudo activity within the correlation window. This is an investigation candidate, not proof of compromise."
@@ -67,6 +72,7 @@
         "correlation_window_seconds": 300,
         "failure_time": "2026-10-02T13:34:35.768613+00:00",
         "success_time": "2026-10-02T13:37:40.753148+00:00",
+        "timestamp": "2026-10-02T13:37:40.753148+00:00",
         "time_gap_seconds": 184.984535,
         "mitre_technique": "Candidate - T1078 Valid Accounts",
         "analyst_note": "Authentication failure was followed by successful sudo activity within the correlation window. This is an investigation candidate, not proof of compromise."
@@ -79,6 +85,7 @@
         "correlation_window_seconds": 300,
         "failure_time": "2026-10-02T13:57:43.900454+00:00",
         "success_time": "2026-10-02T13:58:02.972244+00:00",
+        "timestamp": "2026-10-02T13:58:02.972244+00:00",
         "time_gap_seconds": 19.07179,
         "mitre_technique": "Candidate - T1078 Valid Accounts",
         "analyst_note": "Authentication failure was followed by successful sudo activity within the correlation window. This is an investigation candidate, not proof of compromise."
@@ -95,11 +102,28 @@
             "COMMAND_EXECUTION"
         ],
         "root_login_time": "2026-10-03T13:00:00+00:00",
+        "timestamp": "2026-10-03T13:00:00+00:00",
         "password_change_time": "2026-10-03T13:01:00+00:00",
         "command_execution_time": "2026-10-03T13:02:00+00:00",
         "attack_story_duration_seconds": 120.0,
         "command": "whoami",
         "mitre_technique": "Candidate - T1078 Valid Accounts",
         "analyst_note": "This is a simulated laboratory attack scenario created for SOC Sentinel testing. The sequence demonstrates correlation of privileged account activity followed by password modification and command execution. It is not evidence of a real compromise."
+    },
+    {
+        "incident_id": "SIM-AUTH-20261003140000",
+        "alert_name": "Multiple Authentication Failures Followed by Successful Login",
+        "severity": "High",
+        "status": "INVESTIGATE",
+        "scenario_type": "SIMULATED_LAB_EVENT",
+        "failed_attempts": 3,
+        "success_time": "2026-10-03T14:01:30+00:00",
+        "timestamp": "2026-10-03T14:01:30+00:00",
+        "correlation_window_seconds": 300,
+        "attack_pattern": "FAILED_LOGIN -> FAILED_LOGIN -> FAILED_LOGIN -> SUCCESSFUL_LOGIN",
+        "source_ip": "10.10.10.50",
+        "target_user": "shubam",
+        "mitre_technique": "Candidate - T1110 Brute Force",
+        "analyst_note": "This is a simulated laboratory authentication attack scenario. Multiple authentication failures were followed by a successful authentication within the correlation window. This is an investigation candidate, not proof of compromise."
     }
 ]
